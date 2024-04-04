@@ -20,10 +20,13 @@ RUN apt-get update && apt-get upgrade -y && \
 
 
 COPY wordpress-nginx /etc/nginx/sites-available/
-COPY --chown=www-data:www-data --chmod=755 ./wordpress/ /var/www/
+COPY ./wordpress/ /var/www/wordpress/
 
 # Nginx Config
-RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ && rm -f /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ && \
+    rm -f /etc/nginx/sites-enabled/default && \
+    chown -R www-data:www-data /var/www && \
+    chmod -R 755 /var/www
     
     
 # Wordpress Config    

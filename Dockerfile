@@ -1,6 +1,17 @@
 FROM ubuntu:jammy
 
 COPY wordpress /etc/nginx/sites-available/wordpress
+COPY --chmod=755 ./start.sh /usr/local/bin/
+
+LABEL authors="Ethan Besson" \
+    maintainer="Ethan Besson <contact@southlabs.fr>" \
+    title="Simple Wordpress server" \
+    description="Wordpress CMS for website" \
+    documentation="https://hub.docker.com/_/mariadb/" \
+    base.name="docker.io/library/ubuntu:jammy" \
+    licenses="AFL-3.0" \
+    source="https://github.com/docker-library/wordpress" \
+    version="1.0.0"
 
 RUN apt-get update && apt-get upgrade -y && \  
     apt-get install -y software-properties-common && \
@@ -22,15 +33,10 @@ RUN apt-get update && apt-get upgrade -y && \
     sed -i "s|define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );|define( 'SECURE_AUTH_SALT', '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php && \
     sed -i "s|define( 'LOGGED_IN_SALT',   'put your unique phrase here' );|define( 'LOGGED_IN_SALT',   '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php && \
     sed -i "s|define( 'NONCE_SALT',       'put your unique phrase here' );|define( 'NONCE_SALT',       '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php && \
-    service nginx restart && service php8.3-fpm restart && \
-    echo "#!/bin/bash\nservice php8.3-fpm start\nnginx -g 'daemon off;'" > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
+    service nginx restart && service php8.3-fpm restart
 
 EXPOSE 80
 
 VOLUME /var/www/wordpress
-
-LABEL version="1.0"
-LABEL description="Wordpress Server"
-LABEL maintainer="Ethan Besson <contact@southlabs.fr>"
 
 CMD ["/bin/bash", "/usr/local/bin/start.sh"]

@@ -1,13 +1,12 @@
 FROM ubuntu:jammy
 
-COPY wordpress /etc/nginx/sites-available/wordpress
 COPY --chmod=755 ./start.sh /usr/local/bin/
 
 LABEL authors="Ethan Besson" \
     maintainer="Ethan Besson <contact@southlabs.fr>" \
     title="Simple Wordpress server" \
     description="Wordpress CMS for website" \
-    documentation="https://hub.docker.com/_/mariadb/" \
+    documentation="https://wordpress.org/documentation/" \
     base.name="docker.io/library/ubuntu:jammy" \
     licenses="AFL-3.0" \
     source="https://github.com/docker-library/wordpress" \
@@ -17,12 +16,18 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:ondrej/php &&  \
     apt-get update && mkdir -p /run/php/ && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget nginx unzip php8.3 php8.3-common php8.3-curl php8.3-fpm php8.3-imap php8.3-redis php8.3-cli php8.3-snmp php8.3-xml php8.3-zip php8.3-mbstring php8.3-mysql php8.3-gd php-gd php-xml php-mysql php-mbstring && \
-    wget https://wordpress.org/latest.zip && unzip latest.zip && rm -f latest.zip && mv wordpress /var/www/wordpress/ && \
-    chown -R www-data:www-data /var/www && chmod -R 755 /var/www && \
-    ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/ && rm -f /etc/nginx/sites-enabled/default && \
-    mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php && \
-    sed -i "s/database_name_here/wordpress/g" /var/www/wordpress/wp-config.php && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget nginx unzip php8.3 php8.3-common php8.3-curl php8.3-fpm php8.3-imap php8.3-redis php8.3-cli php8.3-snmp php8.3-xml php8.3-zip php8.3-mbstring php8.3-mysql php8.3-gd php-gd php-xml php-mysql php-mbstring
+
+
+COPY wordpress-nginx /etc/nginx/sites-available/
+COPY --chown=www-data:www-data --chmod=755 ./wordpress/ /var/www/
+
+# Nginx Config
+RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ && rm -f /etc/nginx/sites-enabled/default
+    
+    
+# Wordpress Config    
+RUN sed -i "s/database_name_here/wordpress/g" /var/www/wordpress/wp-config.php && \
     sed -i "s/username_here/wpuser/g" /var/www/wordpress/wp-config.php && \
     sed -i "s/password_here/wpuser/g" /var/www/wordpress/wp-config.php && \
     sed -i "s|define( 'AUTH_KEY',         'put your unique phrase here' );|define( 'AUTH_KEY',         '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php && \

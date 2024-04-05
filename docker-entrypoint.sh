@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Use default values if the variables are not set
+: "${WORDPRESS_DATABASE:=wordpress}"
+: "${WORDPRESS_DATABASE_USER:=wpuser}"
+: "${WORDPRESS_DATABASE_PASSWORD:=wpuser}"
+
 if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
     echo "[Warning] Database host is set to localhost"
     exit 1
@@ -9,6 +14,7 @@ if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s/database_name_here/wordpress/g" /var/www/wordpress/wp-config.php
     sed -i "s/username_here/wpuser/g" /var/www/wordpress/wp-config.php
     sed -i "s/password_here/wpuser/g" /var/www/wordpress/wp-config.php
+    sed -i "s/'localhost'/'${WORDPRESS_DATABASE_HOST}'/g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'AUTH_KEY',         'put your unique phrase here' );|define( 'AUTH_KEY',         '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );|define( 'SECURE_AUTH_KEY',  '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'LOGGED_IN_KEY',    'put your unique phrase here' );|define( 'LOGGED_IN_KEY',    '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php

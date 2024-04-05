@@ -1,6 +1,5 @@
 FROM ubuntu:jammy
 
-COPY --chmod=755 ./start.sh /usr/local/bin/
 COPY --chmod=755 ./docker-entrypoint.sh /usr/local/bin/
 
 LABEL authors="Ethan Besson" \
@@ -44,4 +43,4 @@ HEALTHCHECK --interval=5m --timeout=3s \
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["/bin/bash", "/usr/local/bin/start.sh"]
+CMD ["nginx", "-g", "daemon off;"]

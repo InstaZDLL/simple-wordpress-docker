@@ -27,5 +27,8 @@ else
     echo 'keys are already sets'
 fi
 
+# Starting fpm service
+service php8.3-fpm start
+
 # This will execute any arguments passed to the script, allowing you to still use CMD ["/bin/bash", "/usr/local/bin/start.sh"]
 exec "$@"

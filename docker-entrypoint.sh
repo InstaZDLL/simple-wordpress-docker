@@ -11,9 +11,9 @@ if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
 fi
 
 if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
-    sed -i "s/database_name_here/wordpress/g" /var/www/wordpress/wp-config.php
-    sed -i "s/username_here/wpuser/g" /var/www/wordpress/wp-config.php
-    sed -i "s/password_here/wpuser/g" /var/www/wordpress/wp-config.php
+    sed -i "s/database_name_here/${WORDPRESS_DATABASE}/g" /var/www/wordpress/wp-config.php
+    sed -i "s/username_here/${WORDPRESS_DATABASE_USER}/g" /var/www/wordpress/wp-config.php
+    sed -i "s/password_here/${WORDPRESS_DATABASE_PASSWORD}/g" /var/www/wordpress/wp-config.php
     sed -i "s/'localhost'/'${WORDPRESS_DATABASE_HOST}'/g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'AUTH_KEY',         'put your unique phrase here' );|define( 'AUTH_KEY',         '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );|define( 'SECURE_AUTH_KEY',  '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
@@ -24,7 +24,7 @@ if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s|define( 'LOGGED_IN_SALT',   'put your unique phrase here' );|define( 'LOGGED_IN_SALT',   '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'NONCE_SALT',       'put your unique phrase here' );|define( 'NONCE_SALT',       '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
 else
-    echo "keys are already sets"
+    echo 'keys are already sets'
 fi
 
 # This will execute any arguments passed to the script, allowing you to still use CMD ["/bin/bash", "/usr/local/bin/start.sh"]

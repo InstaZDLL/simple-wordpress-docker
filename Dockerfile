@@ -39,6 +39,9 @@ EXPOSE 80
 
 VOLUME [/var/www/wordpress]
 
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost/ || exit 1
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["/bin/bash", "/usr/local/bin/start.sh"]

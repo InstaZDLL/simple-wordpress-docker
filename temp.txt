@@ -1,0 +1,8 @@
+# && chown -R www-data:www-data /var/log/nginx/ && chown -R www-data:www-data /run/
+
+#CMD ["nginx", "-g", "daemon off;"]
+
+
+
+#service nginx restart
+#service php8.3-fpm restart

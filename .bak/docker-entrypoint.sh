@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# If we are running as root
+#if [ "$(id -u)" = '0' ]; then
+#    # Use gosu to step down from root and run the rest of this script
+#    exec gosu www-data "$BASH_SOURCE" "$@"
+#fi
+
 if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s/database_name_here/wordpress/g" /var/www/wordpress/wp-config.php
     sed -i "s/username_here/wpuser/g" /var/www/wordpress/wp-config.php

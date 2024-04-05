@@ -11,7 +11,9 @@ LABEL authors="Ethan Besson" \
     base.name="docker.io/library/ubuntu:jammy" \
     licenses="AFL-3.0" \
     source="https://github.com/docker-library/wordpress" \
-    version="1.0.0"
+    vendor="the Docker Community" \
+    version="1.0.0" \
+    url="https://github.com/docker-library/wordpress"
 
 RUN apt-get update && apt-get upgrade -y && \  
     apt-get install -y software-properties-common && \
@@ -26,7 +28,9 @@ RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ &
     rm -f /etc/nginx/sites-enabled/default && \
     chown -R www-data:www-data /var/www && \
     chmod -R 755 /var/www && \
-    service nginx restart && service php8.3-fpm restart && gosu www-data true && chown -R www-data:www-data /var/log/nginx/ && chown -R www-data:www-data /run/
+    service nginx restart && \
+    service php8.3-fpm restart && \
+    gosu www-data true
 
 EXPOSE 80
 
@@ -35,5 +39,3 @@ VOLUME /var/www/wordpress
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["/bin/bash", "/usr/local/bin/start.sh"]
-
-#CMD ["nginx", "-g", "daemon off;"]

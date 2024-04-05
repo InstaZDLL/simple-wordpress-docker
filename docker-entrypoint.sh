@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
+    echo "[Warning] Database host is set to localhost"
+    exit 1
+fi
+
 if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s/database_name_here/wordpress/g" /var/www/wordpress/wp-config.php
     sed -i "s/username_here/wpuser/g" /var/www/wordpress/wp-config.php

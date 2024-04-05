@@ -16,7 +16,6 @@ LABEL authors="Ethan Besson" \
     url="https://github.com/docker-library/wordpress"
 
 ENV WORDPRESS_DATABASE_HOST=localhost
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get upgrade -y && \  
@@ -38,7 +37,7 @@ RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ &
 
 EXPOSE 80
 
-VOLUME /var/www/wordpress
+VOLUME [/var/www/wordpress]
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 

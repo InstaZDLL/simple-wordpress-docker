@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Use default values if the variables are not set
+: "${WORDPRESS_DATABASE_HOST:=localhost}"
 : "${WORDPRESS_DATABASE:=wordpress}"
 : "${WORDPRESS_DATABASE_USER:=wpuser}"
 : "${WORDPRESS_DATABASE_PASSWORD:=wpuser}"
@@ -9,6 +10,9 @@ if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
     echo "[Warning] Database host is set to localhost"
     exit 1
 fi
+
+# Import wordpress data into the database
+mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
 
 if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s/database_name_here/${WORDPRESS_DATABASE}/g" /var/www/wordpress/wp-config.php

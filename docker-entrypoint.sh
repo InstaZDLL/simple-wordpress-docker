@@ -13,14 +13,22 @@ if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
 fi
 
 if [ "$WORDPRESS_HOST" = "localhost" ]; then
-    echo -e '[Warning] the variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
+    echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
 fi
 
-if [ "$WORDPRESS_HOST" = "localhost" ]; then
-    echo 'wordpress resources point to http://localhost'
-else
-    sed -i "s/http:\/\/localhost/http:\/\/${WORDPRESS_HOST}/g" /docker-entrypoint-initdb.d/init.sql
-    echo 'The path of wordpress resources have changed, they point to http://${WORDPRESS_HOST}'
+if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
+    if [ "$WORDPRESS_HOST" = "localhost" ]; then
+        echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
+    fi
+
+    if [ "$WORDPRESS_HOST" = "localhost" ]; then
+        echo 'Wordpress resources point to http://localhost'
+    else
+        sed -i "s/http:\/\/localhost/http:\/\/${WORDPRESS_HOST}/g" /docker-entrypoint-initdb.d/init.sql
+        echo 'The path of wordpress resources have changed, they point to http://${WORDPRESS_HOST}'
+    fi
+
+    touch /docker-entrypoint-initdb.d/flagfile
 fi
 
 # Import wordpress data into the database

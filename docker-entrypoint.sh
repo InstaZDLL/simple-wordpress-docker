@@ -19,6 +19,8 @@ fi
 if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
         echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
+        # Import wordpress data into the database
+        mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
     fi
 
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
@@ -30,9 +32,6 @@ if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
 
     touch /docker-entrypoint-initdb.d/flagfile
 fi
-
-# Import wordpress data into the database
-mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
 
 if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s/database_name_here/${WORDPRESS_DATABASE}/g" /var/www/wordpress/wp-config.php
@@ -54,6 +53,7 @@ fi
 
 # Starting fpm service
 service php8.3-fpm start
+echo 'Starting nginx and php-fpm ...'
 
 # This will execute any arguments passed to the script, allowing you to still use CMD ["/bin/bash", "/usr/local/bin/start.sh"]
 exec "$@"

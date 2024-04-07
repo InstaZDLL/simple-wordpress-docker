@@ -1,6 +1,7 @@
 FROM ubuntu:jammy
 
 COPY --chmod=755 ./docker-entrypoint.sh /usr/local/bin/
+COPY --chmod=755 ./healthcheck.sh /usr/local/bin/healthcheck.sh
 
 LABEL authors="Ethan Besson" \
     maintainer="Ethan Besson <contact@southlabs.fr>" \
@@ -17,7 +18,7 @@ LABEL authors="Ethan Besson" \
 ENV WORDPRESS_DATABASE_HOST=localhost
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get upgrade -y && \  
+RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:ondrej/php &&  \
     apt-get update && mkdir -p /run/php/ && \
@@ -39,7 +40,7 @@ EXPOSE 80
 VOLUME [/var/www/wordpress]
 
 HEALTHCHECK --interval=5m --timeout=3s \
-  CMD curl -f http://localhost/ || exit 1
+  CMD /usr/local/bin/healthcheck.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 

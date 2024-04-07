@@ -19,7 +19,6 @@ fi
 if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
         echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
-        # Import wordpress data into the database
         mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
     fi
 

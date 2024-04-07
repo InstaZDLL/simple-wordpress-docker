@@ -12,10 +12,6 @@ if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
     exit 1
 fi
 
-if [ "$WORDPRESS_HOST" = "localhost" ]; then
-    echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
-fi
-
 if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
         echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
@@ -33,6 +29,8 @@ if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
     fi
 
     touch /docker-entrypoint-initdb.d/flagfile
+else
+    echo 'the init.sql file has already been imported'
 fi
 
 if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then

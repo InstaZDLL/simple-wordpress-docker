@@ -19,14 +19,17 @@ fi
 if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
         echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
-        mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
     fi
 
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
         echo 'Wordpress resources point to http://localhost'
+        mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
+        echo '[Info] init.sql was imported into the designated database'
     else
         sed -i "s/http:\/\/localhost/http:\/\/${WORDPRESS_HOST}/g" /docker-entrypoint-initdb.d/init.sql
+        mysql -u ${WORDPRESS_DATABASE_USER} -p${WORDPRESS_DATABASE_PASSWORD} -h ${WORDPRESS_DATABASE_HOST} ${WORDPRESS_DATABASE} < /docker-entrypoint-initdb.d/init.sql
         echo "The path of wordpress resources have changed, they point to http://${WORDPRESS_HOST}"
+        echo '[Info] init.sql was imported into the designated database'
     fi
 
     touch /docker-entrypoint-initdb.d/flagfile

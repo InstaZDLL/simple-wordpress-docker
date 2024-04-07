@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Use default values if the variables are not set
+: "${WORDPRESS_HOST:=localhost}"
 : "${WORDPRESS_DATABASE_HOST:=localhost}"
 : "${WORDPRESS_DATABASE:=wordpress}"
 : "${WORDPRESS_DATABASE_USER:=wpuser}"
@@ -9,6 +10,17 @@
 if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
     echo "[Warning] Database host is set to localhost"
     exit 1
+fi
+
+if [ "$WORDPRESS_HOST" = "localhost" ]; then
+    echo -e '[Warning] the variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'
+fi
+
+if [ "$WORDPRESS_HOST" = "localhost" ]; then
+    echo 'wordpress resources point to http://localhost'
+else
+    sed -i "s/http:\/\/localhost/http:\/\/${WORDPRESS_HOST}/g" /docker-entrypoint-initdb.d/init.sql
+    echo 'The path of wordpress resources have changed, they point to http://${WORDPRESS_HOST}'
 fi
 
 # Import wordpress data into the database
@@ -27,6 +39,7 @@ if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s|define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );|define( 'SECURE_AUTH_SALT', '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'LOGGED_IN_SALT',   'put your unique phrase here' );|define( 'LOGGED_IN_SALT',   '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'NONCE_SALT',       'put your unique phrase here' );|define( 'NONCE_SALT',       '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
+    echo 'keys have been generated'
 else
     echo 'keys are already sets'
 fi

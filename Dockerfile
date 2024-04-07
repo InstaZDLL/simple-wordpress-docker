@@ -40,7 +40,7 @@ EXPOSE 80
 VOLUME [/var/www/wordpress]
 
 HEALTHCHECK --interval=5m --timeout=3s \
-  CMD /usr/local/bin/healthcheck.sh
+  CMD /usr/local/bin/healthcheck.sh || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 

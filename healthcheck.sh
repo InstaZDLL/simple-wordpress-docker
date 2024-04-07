@@ -1,2 +1,6 @@
 #!/bin/bash
-curl -f http://localhost/ || exit 1
+if curl -f http://localhost/; then
+    exit 0
+else
+    exit 1
+fi

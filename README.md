@@ -2,6 +2,12 @@
 
 This repository contains a Docker setup for running a WordPress site. It includes a Dockerfile that sets up a WordPress server and an `init.sql` script that initializes the WordPress database.
 
+**Info :** The worpress in the container is a pre-build image so the user, password, language, front page and the first article has been already set.
+You can modify is in the settings of wordpress.
+
+[ ![GitHub Release](https://img.shields.io/github/v/release/InstaZDLL/simple-wordpress-docker?style=for-the-badge)](https://img.shields.io/github/v/release/InstaZDLL/simple-wordpress-docker?sort=date&display_name=release&style=for-the-badge
+)  ![GitHub License](https://img.shields.io/github/license/InstaZDLL/simple-wordpress-docker?style=for-the-badge) ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/InstaZDLL/simple-wordpress-docker?style=for-the-badge) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/InstaZDLL/simple-wordpress-docker/total?style=for-the-badge&color=%230080ff)
+
 ## How It Works
 
 The Dockerfile starts from the `ubuntu:jammy` base image and installs necessary software including Nginix and PHP 8.3. It then copies the WordPress files into the `/var/www/wordpress/` directory in the container and sets up Nginx and PHP to serve the WordPress site.
@@ -21,8 +27,6 @@ To run a container from the image, use the following command:
 ```bash
 docker run -d -p 80:80 --name some-wordpress -e WORDPRESS_DATABASE_HOST=your-database-host nayeonyny/wordpress
 ```
-
-Replace your-image-name with the name you want to give to your Docker image, and your-database-host with the host of your database.
 
 ## Environment Variables
 The following environment variables can be set when running the Docker container:

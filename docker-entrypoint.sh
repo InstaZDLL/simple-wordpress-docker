@@ -26,7 +26,7 @@ if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
         echo 'Wordpress resources point to http://localhost'
     else
         sed -i "s/http:\/\/localhost/http:\/\/${WORDPRESS_HOST}/g" /docker-entrypoint-initdb.d/init.sql
-        echo 'The path of wordpress resources have changed, they point to http://${WORDPRESS_HOST}'
+        echo "The path of wordpress resources have changed, they point to http://${WORDPRESS_HOST}"
     fi
 
     touch /docker-entrypoint-initdb.d/flagfile

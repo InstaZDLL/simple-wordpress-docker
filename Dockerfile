@@ -23,7 +23,7 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get update && \
     mkdir -p /run/php/ && \
     mkdir -p /docker-entrypoint-initdb.d/ && \
-    apt-get install -y wget nginx unzip php8.3 php8.3-common php8.3-curl php8.3-fpm php8.3-imap php8.3-redis php8.3-cli php8.3-snmp php8.3-xml php8.3-zip php8.3-mbstring php8.3-mysql php8.3-gd php-gd php-xml php-mysql php-mbstring mysql-client gosu
+    apt-get install -y wget nginx unzip php8.3 php8.3-common php8.3-curl php8.3-fpm php8.3-imap php8.3-mysqli php8.3-redis php8.3-cli php8.3-snmp php8.3-xml php8.3-zip php8.3-mbstring php8.3-mysql php8.3-gd mysql-client gosu
 
 COPY --chmod=755 init.sql /docker-entrypoint-initdb.d/
 COPY ./wordpress-nginx /etc/nginx/sites-available/

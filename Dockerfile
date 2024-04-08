@@ -39,7 +39,7 @@ RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ &
 
 EXPOSE 80
 
-VOLUME [/var/www/wordpress]
+VOLUME [/var/www/html]
 
 HEALTHCHECK --interval=5m --timeout=3s \
   CMD /usr/local/bin/healthcheck.sh || exit 1

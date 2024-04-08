@@ -19,7 +19,11 @@ The `init.sql` script is run when the container starts up to initialize the Word
 To run a container from the image, use the following command:
 
 ```bash
-docker run -d -p 80:80 --name wordpress -e WORDPRESS_DATABASE_HOST=your-database-host -v /path/to/volume/:/var/www/wordpress nayeonyny/wordpress:latest
+docker run -d --name wordpress \
+    -e WORDPRESS_DATABASE_HOST=your-database-host \
+    -v /path/to/volume/:/var/www/wordpress \
+    -p 80:80 \
+    nayeonyny/wordpress:latest
 ```
 
 ## Environment Variables

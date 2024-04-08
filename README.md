@@ -25,7 +25,7 @@ docker build -t your-image-name .
 To run a container from the image, use the following command:
 
 ```bash
-docker run -d -p 80:80 --name wordpress -e WORDPRESS_DATABASE_HOST=your-database-host -v /path/to/volume/:/var/www/wordpress nayeonyny/wordpress
+docker run -d -p 80:80 --name wordpress -e WORDPRESS_DATABASE_HOST=your-database-host -v /path/to/volume/:/var/www/wordpress nayeonyny/wordpress:latest
 ```
 
 ## Environment Variables

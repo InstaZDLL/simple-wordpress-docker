@@ -27,10 +27,12 @@ RUN apt-get update && apt-get upgrade -y && \
 
 COPY --chmod=755 init.sql /docker-entrypoint-initdb.d/
 COPY ./wordpress-nginx /etc/nginx/sites-available/
-COPY ./wordpress/ /var/www/wordpress/
+COPY ./wordpress/ /usr/src/wordpress/
 
 RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ && \
     rm -f /etc/nginx/sites-enabled/default && \
+    chown -R www-data:www-data /usr/src/wordpress && \
+    chmod -R 755 /usr/src/wordpress && \
     chown -R www-data:www-data /var/www && \
     chmod -R 755 /var/www && \
     service nginx restart && \
@@ -39,7 +41,7 @@ RUN ln -s /etc/nginx/sites-available/wordpress-nginx /etc/nginx/sites-enabled/ &
 
 EXPOSE 80
 
-VOLUME [/var/www/html]
+VOLUME [/var/www/wordpress]
 
 HEALTHCHECK --interval=5m --timeout=3s \
   CMD /usr/local/bin/healthcheck.sh || exit 1

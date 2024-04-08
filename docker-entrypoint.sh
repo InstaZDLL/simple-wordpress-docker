@@ -12,6 +12,12 @@ if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
     exit 1
 fi
 
+# Check if the WordPress directory is empty
+if [ ! "$(ls -A /var/www/wordpress)" ]; then
+   echo "WordPress directory is empty. Copying files..."
+   cp -R /usr/src/wordpress/* /var/www/wordpress/
+fi
+
 if [ ! -f /docker-entrypoint-initdb.d/flagfile ]; then
     if [ "$WORDPRESS_HOST" = "localhost" ]; then
         echo -e '[Warning] The variable WORDPRESS_HOST has not been defined so all resources will only be available on localhost\nIf you want your wordpress to work online, change this variable'

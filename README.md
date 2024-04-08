@@ -16,12 +16,6 @@ The `init.sql` script is run when the container starts up to initialize the Word
 
 ## How to Run
 
-To build the Docker image, navigate to the directory containing the Dockerfile and run:
-
-```bash
-docker build -t your-image-name .
-```
-
 To run a container from the image, use the following command:
 
 ```bash

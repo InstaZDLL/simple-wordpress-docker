@@ -43,7 +43,7 @@ if grep -q "put your unique phrase here" /var/www/wordpress/wp-config.php; then
     sed -i "s/database_name_here/${WORDPRESS_DATABASE}/g" /var/www/wordpress/wp-config.php
     sed -i "s/username_here/${WORDPRESS_DATABASE_USER}/g" /var/www/wordpress/wp-config.php
     sed -i "s/password_here/${WORDPRESS_DATABASE_PASSWORD}/g" /var/www/wordpress/wp-config.php
-    sed -i "s/'localhost'/'${WORDPRESS_DATABASE_HOST}'/g" /var/www/wordpress/wp-config.php
+    sed -i "s/localhost/${WORDPRESS_DATABASE_HOST}/g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'AUTH_KEY',         'put your unique phrase here' );|define( 'AUTH_KEY',         '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );|define( 'SECURE_AUTH_KEY',  '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php
     sed -i "s|define( 'LOGGED_IN_KEY',    'put your unique phrase here' );|define( 'LOGGED_IN_KEY',    '$(openssl rand -base64 32)' );|g" /var/www/wordpress/wp-config.php

@@ -20,6 +20,7 @@ To run a container from the image, use the following command:
 
 ```bash
 docker run -d --name wordpress \
+    -e WORDPRESS_HOST=your-host-ip \
     -e WORDPRESS_DATABASE_HOST=your-database-host \
     -v /path/to/volume/:/var/www/wordpress \
     -p 80:80 \

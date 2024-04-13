@@ -25,6 +25,10 @@ docker run -d --name wordpress \
     -p 80:80 \
     nayeonyny/wordpress:latest
 ```
+#### Example :
+```bash
+docker run -d --name wordpress -p 80:80 -e WORDPRESS_DATABASE_HOST=172.28.6.193 -e WORDPRESS_HOST=172.28.6.193 -v /home/probu/wptest:/var/www/wordpress nayeonyny/wordpress:latest
+```
 
 ## Environment Variables
 The following environment variables can be set when running the Docker container:

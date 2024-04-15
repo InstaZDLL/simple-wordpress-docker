@@ -1,11 +1,17 @@
 #!/bin/bash
 
 # Use default values if the variables are not set
+: "${WORDPRESS_COMPOSE:-false}"
 : "${WORDPRESS_HOST:-localhost}"
 : "${WORDPRESS_DATABASE_HOST:-localhost}"
 : "${WORDPRESS_DATABASE:-wordpress}"
 : "${WORDPRESS_DATABASE_USER:-wpuser}"
 : "${WORDPRESS_DATABASE_PASSWORD:-wpuser}"
+
+if [ "$WORDPRESS_COMPOSE" = "true" ]; then
+    echo "[Info] The WORDPRESS_COMPOSE env bar is set to True"
+    sleep 10
+fi
 
 if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then
     echo "[Warning] Database host is set to localhost"

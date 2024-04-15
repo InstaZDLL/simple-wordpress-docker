@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+    mariadb:
+        image: docker.io/nayeonyny/mariadb
+        container_name: mariadb-stack
+        ports:
+            - '3306:3306'
+        networks:
+            wordpress-nt:
+                ipv4_address: 172.20.0.2
+        volumes:
+            - mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: wordpress
+            MYSQL_USER: wpuser
+            MYSQL_PASSWORD: wpuser
+
+    wordpress:
+        image: docker.io/nayeonyny/wordpress
+        container_name: wordpress-stack
+        ports:
+            - '80:80'
+        networks:
+            wordpress-nt:
+                ipv4_address: 172.20.0.3
+        volumes:
+            - wordpress_data:/var/www/wordpress
+        environment:
+            WORDPRESS_HOST: 172.20.0.3
+            WORDPRESS_DATABASE_HOST: 172.20.0.2
+            WORDPRESS_DATABASE: wordpress
+            WORDPRESS_DATABASE_USER: wpuser
+            WORDPRESS_DATABASE_PASSWORD: wpuser
+        depends_on:
+            - mariadb
+
+networks:
+    wordpress-nt:
+        ipam:
+            config:
+                - subnet: 172.20.0.0/16
+
+volumes:
+    wordpress_data:
+    mysql_data:

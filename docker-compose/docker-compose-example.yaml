@@ -16,7 +16,7 @@ services:
             MYSQL_PASSWORD: wpuser
 
     wordpress:
-        image: nayeonyny/wordpress-test
+        image: nayeonyny/wordpress
         container_name: wordpress-stack
         ports:
             - '80:80'
@@ -27,7 +27,6 @@ services:
             - wordpress_data:/var/www/wordpress
         environment:
             WORDPRESS_COMPOSE: true
-            WORDPRESS_HOST: 172.20.0.3
             WORDPRESS_DATABASE_HOST: 172.20.0.2
             WORDPRESS_DATABASE: wordpress
             WORDPRESS_DATABASE_USER: wpuser

@@ -10,7 +10,7 @@
 
 if [ "$WORDPRESS_COMPOSE" = "true" ]; then
     echo "[Info] The WORDPRESS_COMPOSE env bar is set to True"
-    sleep 10
+    sleep 8
 fi
 
 if [ "$WORDPRESS_DATABASE_HOST" = "localhost" ]; then

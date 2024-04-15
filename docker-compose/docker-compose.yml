@@ -1,7 +1,7 @@
 version: '3.9'
 services:
     mariadb:
-        image: nayeonyny/mariadb
+        image: nayeonyny/mariadb-test
         container_name: mariadb-stack
         ports:
             - '3306:3306'
@@ -27,7 +27,6 @@ services:
             - wordpress_data:/var/www/wordpress
         environment:
             WORDPRESS_COMPOSE: true
-            WORDPRESS_HOST: 172.20.0.3
             WORDPRESS_DATABASE_HOST: 172.20.0.2
             WORDPRESS_DATABASE: wordpress
             WORDPRESS_DATABASE_USER: wpuser

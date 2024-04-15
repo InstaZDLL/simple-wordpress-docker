@@ -20,7 +20,6 @@ To run a container from the image, use the following command:
 
 ```bash
 docker run -d --name wordpress \
-    -e WORDPRESS_HOST=your-host-ip \
     -e WORDPRESS_DATABASE_HOST=your-database-host \
     -v /path/to/volume/:/var/www/wordpress \
     -p 80:80 \
@@ -28,7 +27,7 @@ docker run -d --name wordpress \
 ```
 #### Example :
 ```bash
-docker run -d --name wordpress -p 80:80 -e WORDPRESS_DATABASE_HOST=172.28.6.193 -e WORDPRESS_HOST=172.28.6.193 -v /home/probu/wptest:/var/www/wordpress nayeonyny/wordpress:latest
+docker run -d --name wordpress -p 80:80 -e WORDPRESS_DATABASE_HOST=172.28.6.193 -v /home/probu/wptest:/var/www/wordpress nayeonyny/wordpress:latest
 ```
 
 ## Environment Variables
@@ -42,7 +41,7 @@ The following environment variables can be set when running the Docker container
 | WORDPRESS\_DATABASE\_HOST | localhost | example.com or 64.23.50.120 | The ip address of the WordPress database, can be private, public or you can use a domain. |
 | WORDPRESS\_HOST | localhost | example.com or 64.23.50.120 | The host of your WordPress site. If this is not set or is empty, it will default to <strong>localhost</strong>. This means that all resources will only be available on localhost. To make your WordPress site work online, change this variable to the public IP address or domain name of your host. |
 
-⚠️ **Important :** The vars `WORDPRESS_DATABASE_HOST` and `WORDPRESS_HOST` it can't be localhost you must change this variable or the container will be stopped, if you have a database container change to host or container ip. ⚠️
+⚠️ **Important :** The var `WORDPRESS_DATABASE_HOST` it can't be `localhost` you must change this variable or the container will be stopped, if you have a database container change to host or container ip. ⚠️
 
 ### How to do :
 

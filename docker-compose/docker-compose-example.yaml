@@ -1,8 +1,8 @@
 version: '3.9'
 services:
-    mysql:
+    mariadb:
         image: docker.io/nayeonyny/mariadb
-        container_name: mysql-stack
+        container_name: mariadb-stack
         ports:
             - '3306:3306'
         networks:
@@ -32,7 +32,7 @@ services:
             WORDPRESS_DATABASE_USER: wpuser
             WORDPRESS_DATABASE_PASSWORD: wpuser
         depends_on:
-            - mysql
+            - mariadb
 
 networks:
     wordpress-nt:

@@ -12,7 +12,7 @@ LABEL authors="Ethan Besson" \
     licenses="AFL-3.0" \
     source="https://github.com/InstaZDLL/simple-wordpress-docker" \
     vendor="the Docker Community" \
-    version="1.0.0" \
+    version="1.0.1" \
     url="https://github.com/InstaZDLL/simple-wordpress-docker"
 
 ARG DEBIAN_FRONTEND=noninteractive

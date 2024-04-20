@@ -9,7 +9,7 @@
 : "${WORDPRESS_DATABASE_PASSWORD:-wpuser}"
 
 if [ "$WORDPRESS_COMPOSE" = "true" ]; then
-    echo "[Info] The WORDPRESS_COMPOSE env bar is set to True"
+    echo "[Info] The WORDPRESS_COMPOSE env var is set to True"
     sleep 8
 fi
 

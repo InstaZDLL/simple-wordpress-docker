@@ -2,7 +2,7 @@ version: '3.9'
 services:
     mariadb:
         image: nayeonyny/mariadb
-        build: ./webapp
+        build: ./mariadb
         container_name: mariadb-stack
         ports:
             - '3306:3306'
@@ -18,7 +18,7 @@ services:
 
     wordpress:
         image: nayeonyny/wordpress
-        build: ./webapp
+        build: ./wordpress
         container_name: wordpress-stack
         ports:
             - '80:80'
